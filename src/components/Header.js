@@ -59,6 +59,8 @@ export default function Header() {
                     window.localStorage.setItem("connected", "injected");
                     // window.localStorage.setItem("connected", "walletconnect")
                   }
+                } else {
+                  alert("No Account Found");
                 }
               }}
               disabled={isWeb3EnableLoading}

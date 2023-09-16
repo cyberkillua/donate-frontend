@@ -83,41 +83,49 @@ export default function Body() {
       <h2 className="text-center text-xl font-semibold mt-4">
         Donate Your Coins
       </h2>
-      <div className="mt-6">
-        <label htmlFor="amount" className="block text-gray-700">
-          Amount you want to donate:
-        </label>
-        <div className="mt-2 relative rounded-md shadow-sm">
-          <input
-            id="amount"
-            className="form-input block w-full pr-10 sm:text-sm sm:leading-5 border-gray-300 rounded-md"
-            type="number"
-            required
-            placeholder="Enter Amount"
-            value={inputValue}
-            onChange={(e) => setInputValue(e.target.value)}
-          />
-          <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
-            <span className="text-gray-500">SEPOLIA</span>
+      {raffleAddress ? (
+        <>
+          <div className="mt-6">
+            <label htmlFor="amount" className="block text-gray-700">
+              Amount you want to donate:
+            </label>
+            <div className="mt-2 relative rounded-md shadow-sm">
+              <input
+                id="amount"
+                className="form-input block w-full pr-10 sm:text-sm sm:leading-5 border-gray-300 rounded-md"
+                type="number"
+                required
+                placeholder="Enter Amount"
+                value={inputValue}
+                onChange={(e) => setInputValue(e.target.value)}
+              />
+              <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                <span className="text-gray-500">SEPOLIA</span>
+              </div>
+            </div>
           </div>
+          <button
+            className="mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded disabled:opacity-50"
+            type="button"
+            onClick={handleDonatebtn}
+            disabled={isLoading || isFetching}
+          >
+            {isLoading || isFetching ? (
+              <div className="animate-spin h-8 w-8 border-b-2 rounded-full"></div>
+            ) : (
+              "Donate"
+            )}
+          </button>
+          <p className="mt-4 text-center">
+            Total amount raised so far:{" "}
+            {ethers.utils.formatUnits(totalAmountDonated, "ether")} ETH
+          </p>
+        </>
+      ) : (
+        <div className="italic text-gray-700">
+          Please connect to a supported chain{" "}
         </div>
-      </div>
-      <button
-        className="mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded disabled:opacity-50"
-        type="button"
-        onClick={handleDonatebtn}
-        disabled={isLoading || isFetching}
-      >
-        {isLoading || isFetching ? (
-          <div className="animate-spin h-8 w-8 border-b-2 rounded-full"></div>
-        ) : (
-          "Donate"
-        )}
-      </button>
-      <p className="mt-4 text-center">
-        Total amount raised so far:{" "}
-        {ethers.utils.formatUnits(totalAmountDonated, "ether")} ETH
-      </p>
+      )}
     </div>
   );
 }
